@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dai="https://diagram.app/schema/dai/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" name="Auth" targetNamespace="https://diagram.app/workflow">
+  <bpmn:process id="Process_1" name="Auth" isExecutable="false">
+    <bpmn:extensionElements>
+      <dai:workflowMeta description="Generate a complete authitcation system" defaultModel="gpt-4o" targetLanguage="" targetFramework="" version="">
+        <dai:taskTypeEntry stepType="api-endpoint" description="Defines a REST or GraphQL API endpoint — its method, path, auth, and request/response schemas." />
+        <dai:taskTypeEntry stepType="service" description="An external or internal service — its base URL, auth scheme, and version. Provides the context for API Endpoints that call it and documents service boundaries in a distributed system." />
+        <dai:taskTypeEntry stepType="" description="A generic work item or activity in the process flow." />
+        <dai:taskTypeEntry stepType="dependency" description="An external library, package, service, API, or resource the project relies on. Documents the source, version, type, and license for dependency management and compliance." />
+        <dai:taskTypeEntry stepType="rule" description="A constraint, policy, or business rule the AI must respect and enforce throughout the workflow. Scope, priority, and enforcement level determine how strictly it applies." />
+        <dai:taskTypeEntry stepType="context" description="Background knowledge, grounding data, or reference material that informs downstream steps. Does not produce output itself — it shapes how the AI reasons." />
+        <dai:taskTypeEntry stepType="test" description="A test case or verification condition — documents what is being tested, how to run it, and what constitutes a pass." />
+      </dai:workflowMeta>
+    </bpmn:extensionElements>
+    <bpmn:subProcess id="Activity_1049z3b" name="Service">
+      <bpmn:incoming>Flow_0uxo92f</bpmn:incoming>
+      <bpmn:outgoing>Flow_0wbxt7r</bpmn:outgoing>
+      <bpmn:task id="Activity_1ckblwe" name="/" dai:stepType="api-endpoint" dai:path="/" service="null">
+        <bpmn:outgoing>Flow_1sl3hzo</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0ifttzj</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:task id="Activity_0whvdih" name="Authenticate" dai:stepType="service">
+        <bpmn:incoming>Flow_1sl3hzo</bpmn:incoming>
+        <bpmn:incoming>Flow_07alz05</bpmn:incoming>
+        <bpmn:incoming>Flow_05t8xw5</bpmn:incoming>
+        <bpmn:incoming>Flow_1tqj2t4</bpmn:incoming>
+        <bpmn:incoming>Flow_0546yo1</bpmn:incoming>
+        <bpmn:incoming>Flow_0b2lra5</bpmn:incoming>
+        <bpmn:incoming>Flow_1oj0cgl</bpmn:incoming>
+        <bpmn:incoming>Flow_0agwtb6</bpmn:incoming>
+        <bpmn:incoming>Flow_1clkzlk</bpmn:incoming>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="Flow_1sl3hzo" sourceRef="Activity_1ckblwe" targetRef="Activity_0whvdih" />
+      <bpmn:task id="Activity_0iplbsh" name="/auth/google/login" dai:stepType="api-endpoint" dai:notes="Redirect into auth workflow using OAuth 2.0" dai:path="/login" dai:authType="oauth2" service="null">
+        <bpmn:outgoing>Flow_07alz05</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="Flow_07alz05" sourceRef="Activity_0iplbsh" targetRef="Activity_0whvdih" />
+      <bpmn:task id="Activity_0vmtx3o" name="/auth/google/return" dai:stepType="api-endpoint" dai:notes="Verify auth response using OAuth 2.0" dai:path="/login" dai:authType="oauth2" service="null">
+        <bpmn:outgoing>Flow_05t8xw5</bpmn:outgoing>
+        <bpmn:outgoing>Flow_00fobtx</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="Flow_05t8xw5" sourceRef="Activity_0vmtx3o" targetRef="Activity_0whvdih" />
+      <bpmn:task id="Activity_0h9xa1m" name="/auth/microsoft/login" dai:stepType="api-endpoint" dai:notes="Redirect into auth workflow using OAuth 2.0" dai:path="/login" dai:authType="oauth2">
+        <bpmn:outgoing>Flow_1tqj2t4</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:task id="Activity_0dj2ns2" name="/auth/microsoft/return" dai:stepType="api-endpoint" dai:notes="Verify auth response using OAuth 2.0" dai:path="/login" dai:authType="oauth2">
+        <bpmn:outgoing>Flow_0546yo1</bpmn:outgoing>
+        <bpmn:outgoing>Flow_01a7q47</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="Flow_1tqj2t4" sourceRef="Activity_0h9xa1m" targetRef="Activity_0whvdih" />
+      <bpmn:sequenceFlow id="Flow_0546yo1" sourceRef="Activity_0dj2ns2" targetRef="Activity_0whvdih" />
+      <bpmn:task id="Activity_055rw71" name="/auth/okta/login" dai:stepType="api-endpoint" dai:notes="Redirect into auth workflow using OAuth 2.0" dai:path="/login" dai:authType="oauth2">
+        <bpmn:outgoing>Flow_0b2lra5</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:task id="Activity_0dgs6ky" name="/auth/okta/return" dai:stepType="api-endpoint" dai:notes="Verify auth response using OAuth 2.0" dai:path="/login" dai:authType="oauth2">
+        <bpmn:outgoing>Flow_1oj0cgl</bpmn:outgoing>
+        <bpmn:outgoing>Flow_0yd3pjg</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="Flow_0b2lra5" sourceRef="Activity_055rw71" targetRef="Activity_0whvdih" />
+      <bpmn:sequenceFlow id="Flow_1oj0cgl" sourceRef="Activity_0dgs6ky" targetRef="Activity_0whvdih" />
+      <bpmn:task id="Activity_02aoxnp" name="/auth/github/login" dai:stepType="api-endpoint" dai:notes="Redirect into auth workflow using OAuth 2.0" dai:path="/login" dai:authType="oauth2">
+        <bpmn:outgoing>Flow_0agwtb6</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:task id="Activity_0ymbvm3" name="/auth/github/return" dai:stepType="api-endpoint" dai:notes="Verify auth response using OAuth 2.0" dai:path="/login" dai:authType="oauth2">
+        <bpmn:outgoing>Flow_1clkzlk</bpmn:outgoing>
+        <bpmn:outgoing>Flow_1725edx</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="Flow_0agwtb6" sourceRef="Activity_02aoxnp" targetRef="Activity_0whvdih" />
+      <bpmn:sequenceFlow id="Flow_1clkzlk" sourceRef="Activity_0ymbvm3" targetRef="Activity_0whvdih" />
+      <bpmn:task id="Activity_1ke8u5b" name="Set Cookie">
+        <bpmn:incoming>Flow_00fobtx</bpmn:incoming>
+        <bpmn:incoming>Flow_01a7q47</bpmn:incoming>
+        <bpmn:incoming>Flow_0yd3pjg</bpmn:incoming>
+        <bpmn:incoming>Flow_1725edx</bpmn:incoming>
+        <bpmn:outgoing>Flow_0mdpkub</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="Flow_00fobtx" sourceRef="Activity_0vmtx3o" targetRef="Activity_1ke8u5b" />
+      <bpmn:sequenceFlow id="Flow_01a7q47" sourceRef="Activity_0dj2ns2" targetRef="Activity_1ke8u5b" />
+      <bpmn:sequenceFlow id="Flow_0yd3pjg" sourceRef="Activity_0dgs6ky" targetRef="Activity_1ke8u5b" />
+      <bpmn:sequenceFlow id="Flow_1725edx" sourceRef="Activity_0ymbvm3" targetRef="Activity_1ke8u5b" />
+      <bpmn:task id="Activity_0bcnlio" name="/auth/logout" dai:stepType="api-endpoint" dai:notes="Verify auth response using OAuth 2.0" dai:path="/login" dai:authType="oauth2">
+        <bpmn:outgoing>Flow_0ly6h6j</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:task id="Activity_1lrmwkg" name="Remove Cookie">
+        <bpmn:incoming>Flow_0ly6h6j</bpmn:incoming>
+        <bpmn:outgoing>Flow_0dn6cty</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="Flow_0ly6h6j" sourceRef="Activity_0bcnlio" targetRef="Activity_1lrmwkg" />
+      <bpmn:task id="Activity_0iy9c3i" name="Redirect to /">
+        <bpmn:incoming>Flow_0dn6cty</bpmn:incoming>
+        <bpmn:incoming>Flow_0mdpkub</bpmn:incoming>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="Flow_0dn6cty" sourceRef="Activity_1lrmwkg" targetRef="Activity_0iy9c3i" />
+      <bpmn:sequenceFlow id="Flow_0mdpkub" sourceRef="Activity_1ke8u5b" targetRef="Activity_0iy9c3i" />
+      <bpmn:task id="Activity_022n3qa" name="Tell user if they loggedin or not">
+        <bpmn:incoming>Flow_0ifttzj</bpmn:incoming>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="Flow_0ifttzj" sourceRef="Activity_1ckblwe" targetRef="Activity_022n3qa" />
+      <bpmn:task id="Activity_0qyjl71" name="Routes" dai:stepType="test" dai:testType="e2e" dai:testSteps="Validate all routes respond appropriately" expectedResult="null" actualResult="null" />
+    </bpmn:subProcess>
+    <bpmn:subProcess id="Activity_09s21n6" name="Environment">
+      <bpmn:outgoing>Flow_0uxo92f</bpmn:outgoing>
+      <bpmn:task id="Activity_1pgwj4j" name="Conda" dai:stepType="dependency" dai:notes="Use Conda to manage all dependencies with a environment.yml" dai:dependencyType="runtime" />
+      <bpmn:task id="Activity_1tfzjw4" name="Python" dai:stepType="dependency" dai:version="3.14" dai:dependencyType="runtime" />
+      <bpmn:task id="Activity_0lta587" name="Simple" dai:stepType="rule" dai:notes="Keep the system simple and easy to understand and maintain. " />
+      <bpmn:task id="Activity_0kmpyii" name="FastAPI" dai:stepType="dependency" dai:version="0.135.3" dai:dependencyType="runtime" />
+      <bpmn:task id="Activity_0esjvxf" name="Make" dai:stepType="dependency" dai:notes="Provide a set of tools to manage this service. Cover environment setup, start the server, and tests" dai:dependencyType="dev" />
+      <bpmn:task id="Activity_1e10m69" name="12-factor" dai:stepType="rule" dai:notes="Use the methods in 12-factor applications. Especially regarding environment variables." />
+      <bpmn:task id="Activity_1r7jf3b" name="black" dai:stepType="dependency" dai:dependencyType="dev" dai:purpose="Format all code with black" />
+      <bpmn:task id="Activity_0trcf9z" name="Minimalistic" dai:stepType="rule" dai:notes="Keep the system minimal and limit dependencies. Feel free to write libraries as needed." dai:scope="global" dai:rulePriority="high" dai:enforcement="hard" />
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0uxo92f" sourceRef="Activity_09s21n6" targetRef="Activity_1049z3b" />
+    <bpmn:subProcess id="Activity_19boexl" name="CI/CD">
+      <bpmn:incoming>Flow_0wbxt7r</bpmn:incoming>
+      <bpmn:task id="Activity_1dx74pj" name="Build" dai:stepType="context" dai:format="text" dai:scope="local" dai:content="Build a docker container locally" />
+      <bpmn:task id="Activity_0nl2shg" name="Docker" dai:stepType="dependency" />
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0wbxt7r" sourceRef="Activity_1049z3b" targetRef="Activity_19boexl" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Activity_1049z3b_di" bpmnElement="Activity_1049z3b" isExpanded="true">
+        <dc:Bounds x="-390" y="-80" width="710" height="850" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ckblwe_di" bpmnElement="Activity_1ckblwe">
+        <dc:Bounds x="-190" y="-10" width="170" height="40" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0whvdih_di" bpmnElement="Activity_0whvdih">
+        <dc:Bounds x="-350" y="-30" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_07553fu" bpmnElement="Activity_0iplbsh">
+        <dc:Bounds x="-190" y="41" width="170" height="50" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1q34869" bpmnElement="Activity_0vmtx3o">
+        <dc:Bounds x="-190" y="103" width="170" height="50" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0a49xfn" bpmnElement="Activity_0h9xa1m">
+        <dc:Bounds x="-190" y="166" width="170" height="50" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0h2wjxn" bpmnElement="Activity_0dj2ns2">
+        <dc:Bounds x="-190" y="228" width="170" height="50" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0e5pam5" bpmnElement="Activity_055rw71">
+        <dc:Bounds x="-190" y="291" width="170" height="50" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_04nni4y" bpmnElement="Activity_0dgs6ky">
+        <dc:Bounds x="-190" y="353" width="170" height="50" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0n1frkk" bpmnElement="Activity_02aoxnp">
+        <dc:Bounds x="-190" y="415" width="170" height="50" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0ajabrg" bpmnElement="Activity_0ymbvm3">
+        <dc:Bounds x="-190" y="477" width="170" height="50" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ke8u5b_di" bpmnElement="Activity_1ke8u5b">
+        <dc:Bounds x="40" y="213" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1j4y88f" bpmnElement="Activity_0bcnlio">
+        <dc:Bounds x="-190" y="545" width="170" height="50" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1lrmwkg_di" bpmnElement="Activity_1lrmwkg">
+        <dc:Bounds x="30" y="530" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0iy9c3i_di" bpmnElement="Activity_0iy9c3i">
+        <dc:Bounds x="180" y="530" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_022n3qa_di" bpmnElement="Activity_022n3qa">
+        <dc:Bounds x="30" y="-30" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qyjl71_di" bpmnElement="Activity_0qyjl71">
+        <dc:Bounds x="-360" y="650" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1sl3hzo_di" bpmnElement="Flow_1sl3hzo">
+        <di:waypoint x="-190" y="10" />
+        <di:waypoint x="-250" y="10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07alz05_di" bpmnElement="Flow_07alz05">
+        <di:waypoint x="-190" y="66" />
+        <di:waypoint x="-220" y="66" />
+        <di:waypoint x="-220" y="10" />
+        <di:waypoint x="-250" y="10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05t8xw5_di" bpmnElement="Flow_05t8xw5">
+        <di:waypoint x="-190" y="128" />
+        <di:waypoint x="-220" y="128" />
+        <di:waypoint x="-220" y="10" />
+        <di:waypoint x="-250" y="10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1tqj2t4_di" bpmnElement="Flow_1tqj2t4">
+        <di:waypoint x="-190" y="191" />
+        <di:waypoint x="-220" y="191" />
+        <di:waypoint x="-220" y="10" />
+        <di:waypoint x="-250" y="10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0546yo1_di" bpmnElement="Flow_0546yo1">
+        <di:waypoint x="-190" y="253" />
+        <di:waypoint x="-220" y="253" />
+        <di:waypoint x="-220" y="10" />
+        <di:waypoint x="-250" y="10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0b2lra5_di" bpmnElement="Flow_0b2lra5">
+        <di:waypoint x="-190" y="316" />
+        <di:waypoint x="-220" y="316" />
+        <di:waypoint x="-220" y="10" />
+        <di:waypoint x="-250" y="10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1oj0cgl_di" bpmnElement="Flow_1oj0cgl">
+        <di:waypoint x="-190" y="378" />
+        <di:waypoint x="-220" y="378" />
+        <di:waypoint x="-220" y="10" />
+        <di:waypoint x="-250" y="10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0agwtb6_di" bpmnElement="Flow_0agwtb6">
+        <di:waypoint x="-190" y="440" />
+        <di:waypoint x="-220" y="440" />
+        <di:waypoint x="-220" y="10" />
+        <di:waypoint x="-250" y="10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1clkzlk_di" bpmnElement="Flow_1clkzlk">
+        <di:waypoint x="-190" y="502" />
+        <di:waypoint x="-220" y="502" />
+        <di:waypoint x="-220" y="10" />
+        <di:waypoint x="-250" y="10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00fobtx_di" bpmnElement="Flow_00fobtx">
+        <di:waypoint x="-20" y="128" />
+        <di:waypoint x="20" y="128" />
+        <di:waypoint x="20" y="253" />
+        <di:waypoint x="40" y="253" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01a7q47_di" bpmnElement="Flow_01a7q47">
+        <di:waypoint x="-20" y="253" />
+        <di:waypoint x="40" y="253" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yd3pjg_di" bpmnElement="Flow_0yd3pjg">
+        <di:waypoint x="-20" y="378" />
+        <di:waypoint x="20" y="378" />
+        <di:waypoint x="20" y="253" />
+        <di:waypoint x="40" y="253" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1725edx_di" bpmnElement="Flow_1725edx">
+        <di:waypoint x="-20" y="502" />
+        <di:waypoint x="20" y="502" />
+        <di:waypoint x="20" y="253" />
+        <di:waypoint x="40" y="253" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ly6h6j_di" bpmnElement="Flow_0ly6h6j">
+        <di:waypoint x="-20" y="570" />
+        <di:waypoint x="30" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dn6cty_di" bpmnElement="Flow_0dn6cty">
+        <di:waypoint x="130" y="570" />
+        <di:waypoint x="180" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mdpkub_di" bpmnElement="Flow_0mdpkub">
+        <di:waypoint x="140" y="253" />
+        <di:waypoint x="160" y="253" />
+        <di:waypoint x="160" y="570" />
+        <di:waypoint x="180" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ifttzj_di" bpmnElement="Flow_0ifttzj">
+        <di:waypoint x="-20" y="10" />
+        <di:waypoint x="30" y="10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_09s21n6_di" bpmnElement="Activity_09s21n6" isExpanded="true">
+        <dc:Bounds x="-720" y="-80" width="290" height="850" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pgwj4j_di" bpmnElement="Activity_1pgwj4j">
+        <dc:Bounds x="-690" y="-20" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0ip187u" bpmnElement="Activity_1tfzjw4">
+        <dc:Bounds x="-570" y="-20" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0kavj17" bpmnElement="Activity_0kmpyii">
+        <dc:Bounds x="-690" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0esjvxf_di" bpmnElement="Activity_0esjvxf">
+        <dc:Bounds x="-570" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_19wo0eo" bpmnElement="Activity_1r7jf3b">
+        <dc:Bounds x="-690" y="180" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0lta587_di" bpmnElement="Activity_0lta587">
+        <dc:Bounds x="-690" y="280" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1e10m69_di" bpmnElement="Activity_1e10m69">
+        <dc:Bounds x="-570" y="280" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0trcf9z_di" bpmnElement="Activity_0trcf9z">
+        <dc:Bounds x="-690" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_19boexl_di" bpmnElement="Activity_19boexl" isExpanded="true">
+        <dc:Bounds x="360" y="-80" width="290" height="850" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0nl2shg_di" bpmnElement="Activity_0nl2shg">
+        <dc:Bounds x="390" y="-20" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1dx74pj_di" bpmnElement="Activity_1dx74pj">
+        <dc:Bounds x="510" y="-20" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0uxo92f_di" bpmnElement="Flow_0uxo92f">
+        <di:waypoint x="-430" y="290" />
+        <di:waypoint x="-390" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wbxt7r_di" bpmnElement="Flow_0wbxt7r">
+        <di:waypoint x="320" y="290" />
+        <di:waypoint x="360" y="290" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
